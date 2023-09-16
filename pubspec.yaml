@@ -1,5 +1,5 @@
 name: flutter_resas_api_hands_on
-description: A new Flutter project.
+description: This is a repository for hands-on exercises with the RESAS API.
 publish_to: 'none'
 version: 0.1.0
 
@@ -9,11 +9,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  gap:
+  simple_logger:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints:
 
 flutter:
   uses-material-design: true
