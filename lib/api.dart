@@ -25,7 +25,8 @@ class ApiClient {
 
   // 市区町村別の一人当たり地方税推移を取得するAPIを叩きます。
   // ref. https://opendata.resas-portal.go.jp/docs/api/v1/municipality/taxes/perYear.html
-  // static Future<List<City>> fetchMunicipalityTaxes({required City city}) async {
+  // static Future<List<City>> fetchMunicipalityTaxes({required City city})
+  //async {
   //   final result = await _fetchAndDecodeResult<Map<String, dynamic>>(
   //     endpoint: 'api/v1/population/sum/estimate',
   //     params: {
