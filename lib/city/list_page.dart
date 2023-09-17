@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_resas_api_hands_on/api.dart';
 
+import '../api.dart';
+import '../widgets/widgets.dart';
 import 'city.dart';
 import 'detail_page.dart';
 
@@ -31,33 +32,12 @@ class _CityListPageState extends State<CityListPage> {
       body: FutureBuilder(
         future: _citiesFuture,
         builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.active:
-            case ConnectionState.waiting:
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            case ConnectionState.done:
-              if (snapshot.hasData) {
-                return _ListView(cities: snapshot.data!);
-              }
-              final error = snapshot.error;
-              if (error is ApiException) {
-                return Center(
-                  child: Text(
-                    '${error.message}\n${error.description}',
-                    textAlign: TextAlign.center,
-                  ),
-                );
-              }
-              return Center(
-                child: Text(
-                  snapshot.error.toString(),
-                  textAlign: TextAlign.center,
-                ),
-              );
-          }
+          return switch (snapshot.connectionState) {
+            ConnectionState.done => snapshot.hasData
+                ? _ListView(cities: snapshot.data!)
+                : CenteredErrorText(error: snapshot.error!),
+            _ => const CenteredCircularProgressIndicator(),
+          };
         },
       ),
     );

@@ -9,10 +9,25 @@
 | 市区町村一覧 | 一人あたりの地方税 |
 | ![](./screenshot/list.png) | ![](./screenshot/detail.png) |
 
+## 事前準備
+
+プロジェクトルートに以下を記載した`env.dart`ファイルを作成してください。
+本来このAPIキーは漏洩してはいけない情報のためサーバ経由でアクセスした方がベターですが、今回は簡略化のため割愛しています。
+
+```dart
+abstract class Env {
+  static const resasApiKey = '[YOUR_API_KEY]';
+}
+
+```
+
 ## チャプター（仮）
 
 1. Widgetを使った画面レイアウトの作成
 1. Navigator APIを使った画面遷移
+1. モデルの作成
+1. APIを叩いて非同期のデータ取得
+1. `FutureBuilder`を使って非同期で取得したデータを表示
 
 ## 参考
 
