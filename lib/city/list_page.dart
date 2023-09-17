@@ -40,24 +40,24 @@ class _CityListPageState extends State<CityListPage> {
                 child: CircularProgressIndicator(),
               );
             case ConnectionState.done:
-              if (snapshot.hasError) {
-                if (snapshot.error is ApiException) {
-                  final exception = snapshot.error! as ApiException;
-                  return Center(
-                    child: Text(
-                      '${exception.message}\n${exception.description}',
-                      textAlign: TextAlign.center,
-                    ),
-                  );
-                }
+              if (snapshot.hasData) {
+                return _ListView(cities: snapshot.data!);
+              }
+              final error = snapshot.error;
+              if (error is ApiException) {
                 return Center(
                   child: Text(
-                    snapshot.error.toString(),
+                    '${error.message}\n${error.description}',
                     textAlign: TextAlign.center,
                   ),
                 );
               }
-              return _ListView(cities: snapshot.data!);
+              return Center(
+                child: Text(
+                  snapshot.error.toString(),
+                  textAlign: TextAlign.center,
+                ),
+              );
           }
         },
       ),
