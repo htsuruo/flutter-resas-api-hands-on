@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_resas_api_hands_on/model/city.dart';
+
+import 'city.dart';
 
 class CityDetailPage extends StatelessWidget {
   const CityDetailPage({super.key, required this.city});

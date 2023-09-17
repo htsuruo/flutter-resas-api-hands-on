@@ -1,4 +1,6 @@
 // ref. https://opendata.resas-portal.go.jp/docs/api/v1/cities.html
+import 'city_type.dart';
+
 class City {
   City({
     required this.prefCode,
@@ -33,18 +35,4 @@ class City {
 
   @override
   int get hashCode;
-}
-
-enum CityType {
-  /// 一般の市区町村
-  general,
-
-  /// 政令指定都市の区
-  designatedWard,
-
-  /// 政令指定都市の市
-  designatedCity,
-
-  /// 東京都23区
-  designatedTokyoWard,
 }

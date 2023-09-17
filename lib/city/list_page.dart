@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_resas_api_hands_on/api.dart';
 
-import '../model/city.dart';
-import 'detail.dart';
+import 'city.dart';
+import 'detail_page.dart';
 
 class CityListPage extends StatefulWidget {
   const CityListPage({
