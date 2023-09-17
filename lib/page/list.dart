@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_resas_api_hands_on/api.dart';
 
-import '../env.dart';
 import '../model/city.dart';
 import 'detail.dart';
 
@@ -17,23 +14,7 @@ class CityListPage extends StatefulWidget {
 }
 
 class _CityListPageState extends State<CityListPage> {
-  late Future<List<City>> _citiesFuture;
-
-  @override
-  void initState() {
-    super.initState();
-    _citiesFuture = http.get(
-      Uri.https('opendata.resas-portal.go.jp', '/api/v1/cities'),
-      headers: {
-        'X-API-KEY': Env.resasApiKey,
-      },
-    ).then((res) {
-      final body = jsonDecode(res.body) as Map<String, dynamic>;
-      final result =
-          (body['result'] as List).map((res) => res as Map<String, dynamic>);
-      return result.map(City.fromJson).toList();
-    });
-  }
+  late final Future<List<City>> _citiesFuture = ApiClient.fetchCities();
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +35,11 @@ class _CityListPageState extends State<CityListPage> {
               );
             case ConnectionState.done:
               if (snapshot.hasError) {
-                return const Center(
+                final exception = snapshot.error! as ApiException;
+                return Center(
                   child: Text(
-                    'データの取得に失敗しました',
+                    '${exception.message}\n${exception.description}',
+                    textAlign: TextAlign.center,
                   ),
                 );
               }
