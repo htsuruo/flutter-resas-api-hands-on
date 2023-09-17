@@ -1,18 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const MyApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      title: 'Flutter Beginners hands-on',
+      theme: ThemeData.light(useMaterial3: true),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('ja'),
+      ],
       home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
+        appBar: AppBar(
+          title: const Text('市区町村一覧'),
+        ),
+        body: ListView.builder(
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: const Text('text'),
+              subtitle: const Text('text'),
+              trailing: const Icon(Icons.navigate_next),
+              onTap: () {},
+            );
+          },
         ),
       ),
     );

@@ -9,13 +9,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   gap:
   simple_logger:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints:
+  pedantic_mono:
 
 flutter:
   uses-material-design: true
