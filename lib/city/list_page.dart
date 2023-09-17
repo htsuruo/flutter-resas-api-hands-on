@@ -31,8 +31,7 @@ class _CityListPageState extends State<CityListPage> {
       body: FutureBuilder(
         future: _citiesFuture,
         builder: (context, snapshot) {
-          final state = snapshot.connectionState;
-          switch (state) {
+          switch (snapshot.connectionState) {
             case ConnectionState.none:
             case ConnectionState.active:
             case ConnectionState.waiting:

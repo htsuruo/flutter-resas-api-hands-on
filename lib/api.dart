@@ -4,6 +4,7 @@ import 'package:flutter_resas_api_hands_on/env.dart';
 import 'package:http/http.dart' as http;
 
 import 'city/city.dart';
+import 'city/detail_page.dart';
 
 class ApiClient {
   ApiClient._();
@@ -26,22 +27,25 @@ class ApiClient {
 
   // 市区町村別の一人当たり地方税推移を取得するAPIを叩きます。
   // ref. https://opendata.resas-portal.go.jp/docs/api/v1/municipality/taxes/perYear.html
-  // static Future<List<City>> fetchMunicipalityTaxes({required City city})
-  //async {
-  //   final result = await _fetchAndDecodeResult<Map<String, dynamic>>(
-  //     endpoint: 'api/v1/population/sum/estimate',
-  //     params: {
-  //       'prefCode': city.prefCode.toString(),
-  //       'cityCode': city.cityCode,
-  //     },
-  //   );
-  //   final data = (result['data'] as List)
-  //       .map((data) => (data['year'] as int, data['value'] as double))
-  //       .toList();
-  //   return result
-  //       .map((res) => City.fromJson(res as Map<String, dynamic>))
-  //       .toList();
-  // }
+  static Future<List<YearAndValue>> fetchMunicipalityTaxes({
+    required City city,
+  }) async {
+    final result = await _fetchAndDecodeResult<Map<String, dynamic>>(
+      endpoint: 'api/v1/municipality/taxes/perYear',
+      params: {
+        'prefCode': city.prefCode.toString(),
+        'cityCode': city.cityCode,
+      },
+    );
+    return (result['data'] as List)
+        .map((data) {
+          final json = data as Map<String, dynamic>;
+          return (json['year'] as int, json['value'] as int);
+        })
+        .toList()
+        .reversed
+        .toList();
+  }
 
   static Future<T> _fetchAndDecodeResult<T>({
     required String endpoint,
