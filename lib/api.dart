@@ -23,20 +23,30 @@ class ApiClient {
         .toList();
   }
 
-  // 市区町村別の出生数・死亡数／転入数・転出数推移を取得するAPIを叩きます。
-  // ref. https://opendata.resas-portal.go.jp/docs/api/v1/population/sum/estimate.html
-  // static Future<List<City>> fetchEstimatedPopulation() async {
-  //   final result = await _fetchAndDecodeResult<List<dynamic>>(
+  // 市区町村別の一人当たり地方税推移を取得するAPIを叩きます。
+  // ref. https://opendata.resas-portal.go.jp/docs/api/v1/municipality/taxes/perYear.html
+  // static Future<List<City>> fetchMunicipalityTaxes({required City city}) async {
+  //   final result = await _fetchAndDecodeResult<Map<String, dynamic>>(
   //     endpoint: 'api/v1/population/sum/estimate',
+  //     params: {
+  //       'prefCode': city.prefCode.toString(),
+  //       'cityCode': city.cityCode,
+  //     },
   //   );
+  //   final data = (result['data'] as List)
+  //       .map((data) => (data['year'] as int, data['value'] as double))
+  //       .toList();
   //   return result
   //       .map((res) => City.fromJson(res as Map<String, dynamic>))
   //       .toList();
   // }
 
-  static Future<T> _fetchAndDecodeResult<T>({required String endpoint}) async {
+  static Future<T> _fetchAndDecodeResult<T>({
+    required String endpoint,
+    Map<String, dynamic>? params,
+  }) async {
     final response = await http.get(
-      Uri.https(_host, endpoint),
+      Uri.https(_host, endpoint, params),
       headers: _headers,
     );
     final body = jsonDecode(response.body) as Map<String, dynamic>;
