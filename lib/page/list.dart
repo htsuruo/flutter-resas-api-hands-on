@@ -14,7 +14,13 @@ class CityListPage extends StatefulWidget {
 }
 
 class _CityListPageState extends State<CityListPage> {
-  late final Future<List<City>> _citiesFuture = ApiClient.fetchCities();
+  late Future<List<City>> _citiesFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _citiesFuture = ApiClient.fetchCities();
+  }
 
   @override
   Widget build(BuildContext context) {
