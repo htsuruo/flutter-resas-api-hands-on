@@ -12,6 +12,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   gap:
+  http:
   simple_logger:
 
 dev_dependencies:
