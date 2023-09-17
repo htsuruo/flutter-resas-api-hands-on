@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_resas_api_hands_on/api.dart';
+import 'package:flutter_api_hands_on/api.dart';
 
 import '../model/city.dart';
 import 'detail.dart';
