@@ -21,21 +21,49 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [
         Locale('ja'),
       ],
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('市区町村一覧'),
-        ),
-        body: ListView.builder(
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: const Text('text'),
-              subtitle: const Text('text'),
-              trailing: const Icon(Icons.navigate_next),
-              onTap: () {},
-            );
-          },
-        ),
+      home: const CityListPage(),
+    );
+  }
+}
+
+class CityListPage extends StatelessWidget {
+  const CityListPage({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('市区町村一覧'),
       ),
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: const Text('text'),
+            subtitle: const Text('text'),
+            trailing: const Icon(Icons.navigate_next),
+            onTap: () {
+              Navigator.of(context).push<void>(
+                MaterialPageRoute(
+                  builder: (context) => const CityDetailPage(),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+class CityDetailPage extends StatelessWidget {
+  const CityDetailPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('市区町村詳細')),
     );
   }
 }
