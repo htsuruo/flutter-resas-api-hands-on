@@ -35,10 +35,18 @@ class _CityListPageState extends State<CityListPage> {
               );
             case ConnectionState.done:
               if (snapshot.hasError) {
-                final exception = snapshot.error! as ApiException;
+                if (snapshot.error is ApiException) {
+                  final exception = snapshot.error! as ApiException;
+                  return Center(
+                    child: Text(
+                      '${exception.message}\n${exception.description}',
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                }
                 return Center(
                   child: Text(
-                    '${exception.message}\n${exception.description}',
+                    snapshot.error.toString(),
                     textAlign: TextAlign.center,
                   ),
                 );
