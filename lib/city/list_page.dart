@@ -77,7 +77,7 @@ class _ListView extends StatelessWidget {
         final city = cities[index];
         return ListTile(
           title: Text(city.cityName),
-          subtitle: Text(city.cityCode),
+          subtitle: Text(city.cityType.label),
           trailing: const Icon(Icons.navigate_next),
           onTap: () {
             Navigator.of(context).push<void>(
