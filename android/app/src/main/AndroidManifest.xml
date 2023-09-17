@@ -4,7 +4,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:label="flutter_api_hands_on"
+        android:label="flutter_resas_api_hands_on"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

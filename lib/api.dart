@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter_api_hands_on/env.dart';
-import 'package:flutter_api_hands_on/model/city.dart';
+import 'package:flutter_resas_api_hands_on/env.dart';
+import 'package:flutter_resas_api_hands_on/model/city.dart';
 import 'package:http/http.dart' as http;
 
 class ApiClient {

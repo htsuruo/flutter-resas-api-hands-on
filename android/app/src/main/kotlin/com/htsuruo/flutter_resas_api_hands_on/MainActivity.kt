@@ -1,4 +1,4 @@
-package com.htsuruo.flutter_api_hands_on
+package com.htsuruo.flutter_resas_api_hands_on
 
 import io.flutter.embedding.android.FlutterActivity
 
