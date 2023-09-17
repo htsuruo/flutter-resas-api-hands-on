@@ -12,6 +12,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   http:
+  intl:
 
 dev_dependencies:
   flutter_test:
