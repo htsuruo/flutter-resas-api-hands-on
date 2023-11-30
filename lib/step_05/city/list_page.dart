@@ -55,7 +55,7 @@ class _CityListPageState extends State<CityListPage> {
                   final city = cities[index];
                   return ListTile(
                     title: Text(city.cityName),
-                    subtitle: Text(city.bigCityFlag),
+                    subtitle: Text(city.cityType.label),
                     trailing: const Icon(Icons.navigate_next),
                     onTap: () {
                       Navigator.of(context).push<void>(
