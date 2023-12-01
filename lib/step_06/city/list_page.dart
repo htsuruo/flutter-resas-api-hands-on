@@ -64,7 +64,7 @@ class _CityListPageState extends State<CityListPage> {
                       Navigator.of(context).push<void>(
                         MaterialPageRoute(
                           builder: (context) => CityDetailPage(
-                            city: city.cityName,
+                            city: city,
                           ),
                         ),
                       );
