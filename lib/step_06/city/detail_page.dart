@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 import '../../env.dart';
 
@@ -50,13 +51,41 @@ class _CityDetailPageState extends State<CityDetailPage> {
       body: FutureBuilder<String>(
         future: _municipalityTaxesFuture,
         builder: (context, snapshot) {
-          final result =
-              jsonDecode(snapshot.data!)['result'] as Map<String, dynamic>;
-          final data = result['data'] as List;
-          final items = data.cast<Map<String, dynamic>>();
-          return Text('${widget.city}の詳細画面です');
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              final result =
+                  jsonDecode(snapshot.data!)['result'] as Map<String, dynamic>;
+              final data = result['data'] as List;
+              final items = data.cast<Map<String, dynamic>>();
+              return ListView.separated(
+                itemCount: items.length,
+                separatorBuilder: (context, index) => const Divider(),
+                itemBuilder: (context, index) {
+                  final item = items[index];
+                  return ListTile(
+                    title: Text('${item['year']}年'),
+                    trailing: Text(
+                      _formatTaxLabel(item['value'] as int),
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  );
+                },
+              );
+            case ConnectionState.none:
+            case ConnectionState.waiting:
+            case ConnectionState.active:
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         },
       ),
     );
+  }
+
+  // 千円単位の税金を表示するためのフォーマットを行います
+  String _formatTaxLabel(int value) {
+    final formatted = NumberFormat('#,###').format(value * 1000);
+    return '$formatted円';
   }
 }
