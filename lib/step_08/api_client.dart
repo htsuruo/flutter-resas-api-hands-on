@@ -30,14 +30,13 @@ abstract class ApiClient {
 
   // 一人当たり地方税をGETで取得する
   static Future<List<AnnualMunicipalityTax>> fetchMunicipalityTaxes({
-    required int prefCode,
-    required String cityCode,
+    required City city,
   }) async {
     final res = await http.get(
       // 第三引数にパラメータを指定できます
       Uri.https(_host, '/api/v1/municipality/taxes/perYear', {
-        'prefCode': prefCode.toString(),
-        'cityCode': cityCode,
+        'prefCode': city.prefCode.toString(),
+        'cityCode': city.cityCode,
       }),
       headers: _headers,
     );

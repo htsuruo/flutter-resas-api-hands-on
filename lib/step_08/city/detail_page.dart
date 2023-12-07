@@ -22,8 +22,7 @@ class _CityDetailPageState extends State<CityDetailPage> {
   void initState() {
     super.initState();
     _municipalityTaxesFuture = ApiClient.fetchMunicipalityTaxes(
-      prefCode: widget.city.prefCode,
-      cityCode: widget.city.cityCode,
+      city: widget.city,
     );
   }
 
