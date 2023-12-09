@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../api/api_client.dart';
+import '../widgets/widgets.dart';
 import 'city.dart';
 import 'detail_page.dart';
-import 'widgets/widgets.dart';
 
 class CityListPage extends StatefulWidget {
   const CityListPage({
