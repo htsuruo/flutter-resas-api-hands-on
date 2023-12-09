@@ -7,7 +7,9 @@ import 'city.dart';
 import 'detail_page.dart';
 
 class CityListPage extends StatefulWidget {
-  const CityListPage({super.key});
+  const CityListPage({
+    super.key,
+  });
 
   @override
   State<CityListPage> createState() => _CityListPageState();
@@ -28,43 +30,45 @@ class _CityListPageState extends State<CityListPage> {
       appBar: AppBar(
         title: const Text('市区町村一覧'),
       ),
-      body: FutureBuilder<List<City>>(
+      body: FutureBuilder(
         future: _citiesFuture,
         builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              if (snapshot.hasError) {
-                return CenteredErrorText(error: snapshot.error!);
-              }
-              // 本来はhasErrorで分岐するべきですが割愛
-              final cities = snapshot.data!;
-              return ListView.builder(
-                itemCount: cities.length,
-                itemBuilder: (context, index) {
-                  final city = cities[index];
-                  return ListTile(
-                    title: Text(city.cityName),
-                    subtitle: Text(city.cityType.label),
-                    trailing: const Icon(Icons.navigate_next),
-                    onTap: () {
-                      Navigator.of(context).push<void>(
-                        MaterialPageRoute(
-                          builder: (context) => CityDetailPage(
-                            city: city,
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              );
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-            case ConnectionState.active:
-          }
-          return const CenteredCircularProgressIndicator();
+          return switch (snapshot.connectionState) {
+            ConnectionState.done => snapshot.hasData
+                ? _ListView(cities: snapshot.data!)
+                : CenteredErrorText(error: snapshot.error!),
+            _ => const CenteredCircularProgressIndicator(),
+          };
         },
       ),
+    );
+  }
+}
+
+class _ListView extends StatelessWidget {
+  const _ListView({required this.cities});
+
+  final List<City> cities;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: cities.length,
+      itemBuilder: (context, index) {
+        final city = cities[index];
+        return ListTile(
+          title: Text(city.cityName),
+          subtitle: Text(city.cityType.label),
+          trailing: const Icon(Icons.navigate_next),
+          onTap: () {
+            Navigator.of(context).push<void>(
+              MaterialPageRoute(
+                builder: (context) => CityDetailPage(city: city),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

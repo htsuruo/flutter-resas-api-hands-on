@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_resas_api_hands_on/widgets/widgets.dart';
 import 'package:intl/intl.dart';
 
 import '../api_client.dart';
+import '../widgets/centered_circular_progress_indicator.dart';
+import '../widgets/centered_error_text.dart';
 import 'annual_municipality_tax.dart';
 import 'city.dart';
 
@@ -29,69 +30,71 @@ class _CityDetailPageState extends State<CityDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.city.cityName),
-      ),
-      body: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            color: Theme.of(context).colorScheme.primaryContainer,
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-              child: Text(
-                '一人当たり地方税',
-              ),
-            ),
-          ),
-          Expanded(
-            child: FutureBuilder<List<AnnualMunicipalityTax>>(
-              future: _municipalityTaxesFuture,
-              builder: (context, snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.done:
-                    final taxes = snapshot.data!;
-                    return ListView.separated(
-                      itemCount: taxes.length,
-                      separatorBuilder: (context, index) => const Divider(),
-                      itemBuilder: (context, index) {
-                        final tax = taxes[index];
-                        return ListTile(
-                          title: Text('${tax.year}年'),
-                          trailing: _FormattedTaxText(tax: tax.value),
-                        );
-                      },
-                    );
-                  case ConnectionState.none:
-                  case ConnectionState.waiting:
-                  case ConnectionState.active:
-                }
-                return const CenteredCircularProgressIndicator();
-              },
-            ),
-          ),
-        ],
+      appBar: AppBar(title: Text(widget.city.cityName)),
+      body: FutureBuilder<List<AnnualMunicipalityTax>>(
+        future: _municipalityTaxesFuture,
+        builder: (context, snapshot) {
+          return switch (snapshot.connectionState) {
+            ConnectionState.done => snapshot.hasData
+                ? _ListViewWithLabel(taxes: snapshot.data!)
+                : CenteredErrorText(error: snapshot.error!),
+            _ => const CenteredCircularProgressIndicator(),
+          };
+        },
       ),
     );
   }
 }
 
-class _FormattedTaxText extends StatelessWidget {
-  const _FormattedTaxText({required this.tax});
+class _ListViewWithLabel extends StatelessWidget {
+  const _ListViewWithLabel({required this.taxes});
 
-  final int tax;
+  final List<AnnualMunicipalityTax> taxes;
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      _formatTaxLabel(tax),
-      style: Theme.of(context).textTheme.bodyLarge,
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: double.infinity,
+          color: colorScheme.primaryContainer,
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            child: Text(
+              '一人当たり地方税',
+            ),
+          ),
+        ),
+        Expanded(
+          child: ListView(
+            children: [
+              for (final tax in taxes)
+                ListTile(
+                  title: Text('${tax.year}年'),
+                  trailing: _ValueText(value: tax.value),
+                ),
+            ],
+          ),
+        ),
+      ],
     );
   }
+}
 
-  // 千円単位の税金を表示するためのフォーマットを行います
-  String _formatTaxLabel(int value) {
-    final formatted = NumberFormat('#,###').format(value * 1000);
-    return '$formatted円';
+class _ValueText extends StatelessWidget {
+  const _ValueText({required this.value});
+
+  final int value;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Text(
+      '${NumberFormat('#,###').format(value * 1000)}円',
+      style: theme.textTheme.bodyLarge,
+    );
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_resas_api_hands_on/widgets/widgets.dart';
 import 'package:intl/intl.dart';
 
 import '../api_client.dart';
+import '../widgets/centered_circular_progress_indicator.dart';
 import 'annual_municipality_tax.dart';
 import 'city.dart';
 

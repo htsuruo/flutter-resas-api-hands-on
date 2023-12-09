@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../api.dart';
+import '../api_exception.dart';
 
 class CenteredErrorText extends StatelessWidget {
   const CenteredErrorText({super.key, required this.error});

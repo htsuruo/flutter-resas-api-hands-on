@@ -5,52 +5,77 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../env.dart';
+import 'api_exception.dart';
 import 'city/annual_municipality_tax.dart';
 import 'city/city.dart';
 
 abstract class ApiClient {
   static const _host = 'opendata.resas-portal.go.jp';
-  static final _headers = {
+  static const _headers = {
     'X-API-KEY': Env.resasApiKey,
   };
 
-  // 市区町村一覧をGETで取得する
+  // 市区町村の一覧を取得するAPIを叩きます。
+  // ref. https://opendata.resas-portal.go.jp/docs/api/v1/cities.html
   static Future<List<City>> fetchCities() async {
-    final res = await http.get(
-      Uri.https(_host, '/api/v1/cities'),
-      headers: _headers,
+    final result = await _fetchAndDecodeResult<List<dynamic>>(
+      endpoint: '/api/v1/cities',
     );
-    if (res.statusCode == 200) {
-      final json = jsonDecode(res.body)['result'] as List;
-      final items = json.cast<Map<String, dynamic>>();
-      return items.map(City.fromJson).toList();
-    }
-    throw Exception('Failed to load cities');
+    return result.cast<Map<String, dynamic>>().map(City.fromJson).toList();
   }
 
-  // 一人当たり地方税をGETで取得する
+  // 市区町村別の一人当たり地方税推移を取得するAPIを叩きます。
+  // ref. https://opendata.resas-portal.go.jp/docs/api/v1/municipality/taxes/perYear.html
   static Future<List<AnnualMunicipalityTax>> fetchMunicipalityTaxes({
     required City city,
   }) async {
-    final res = await http.get(
-      // 第三引数にパラメータを指定できます
-      Uri.https(_host, '/api/v1/municipality/taxes/perYear', {
+    final result = await _fetchAndDecodeResult<Map<String, dynamic>>(
+      endpoint: 'api/v1/municipality/taxes/perYear',
+      params: {
         'prefCode': city.prefCode.toString(),
         'cityCode': city.cityCode,
-      }),
+      },
+    );
+    return (result['data'] as List)
+        .cast<Map<String, dynamic>>()
+        .reversed
+        .map(AnnualMunicipalityTax.fromJson)
+        .toList();
+  }
+
+  static Future<T> _fetchAndDecodeResult<T>({
+    required String endpoint,
+    Map<String, dynamic>? params,
+  }) async {
+    final response = await http.get(
+      Uri.https(_host, endpoint, params),
       headers: _headers,
     );
-    if (res.statusCode == 200) {
-      final result = jsonDecode(res.body)['result'] as Map<String, dynamic>;
-      final data = result['data'] as List;
-      final items = data.cast<Map<String, dynamic>>();
-      return items
-          .map(AnnualMunicipalityTax.fromJson)
-          .toList()
-          .reversed
-          .toList();
+    final body = jsonDecode(response.body) as Map<String, dynamic>;
+    final statusCode = body['statusCode'] as String?;
+    // 成功時は`statusCode`が返ってこないため`null`を許容します。
+    if (statusCode == null || statusCode == '200') {
+      return body['result'] as T;
+    }
+    final (message, description) = _decodeException(body);
+    throw ApiException(
+      statusCode: statusCode,
+      message: message,
+      description: description,
+    );
+  }
+
+  static (String message, String description) _decodeException(
+    Map<String, dynamic> body,
+  ) {
+    if (body
+        case {
+          'message': final String message,
+          'description': final String description,
+        }) {
+      return (message, description);
     } else {
-      throw Exception('Failed to load municipality taxes');
+      throw const FormatException('Unexpected JSON');
     }
   }
 }
