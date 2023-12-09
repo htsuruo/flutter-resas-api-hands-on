@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../api_client.dart';
-import '../widgets/centered_circular_progress_indicator.dart';
-import '../widgets/centered_error_text.dart';
+import '../api/api_client.dart';
 import 'city.dart';
 import 'detail_page.dart';
+import 'widgets/widgets.dart';
 
 class CityListPage extends StatefulWidget {
   const CityListPage({

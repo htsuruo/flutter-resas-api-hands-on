@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../api_client.dart';
-import '../widgets/centered_circular_progress_indicator.dart';
-import '../widgets/centered_error_text.dart';
+import '../api/api_client.dart';
 import 'annual_municipality_tax.dart';
 import 'city.dart';
+import 'widgets/widgets.dart';
 
 class CityDetailPage extends StatefulWidget {
   const CityDetailPage({super.key, required this.city});
