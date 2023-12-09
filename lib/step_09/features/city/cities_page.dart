@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-import '../api/api_client.dart';
-import '../widgets/widgets.dart';
+import '../../api/api_client.dart';
+import '../../widgets/widgets.dart';
+import '../municipality_tax/municipality_taxes_page.dart';
 import 'city.dart';
-import 'detail_page.dart';
 
-class CityListPage extends StatefulWidget {
-  const CityListPage({
+class CitiesPage extends StatefulWidget {
+  const CitiesPage({
     super.key,
   });
 
   @override
-  State<CityListPage> createState() => _CityListPageState();
+  State<CitiesPage> createState() => _CitiesPageState();
 }
 
-class _CityListPageState extends State<CityListPage> {
+class _CitiesPageState extends State<CitiesPage> {
   late Future<List<City>> _citiesFuture;
 
   @override
@@ -62,7 +62,7 @@ class _ListView extends StatelessWidget {
           onTap: () {
             Navigator.of(context).push<void>(
               MaterialPageRoute(
-                builder: (context) => CityDetailPage(city: city),
+                builder: (context) => MunicipalityTaxesPage(city: city),
               ),
             );
           },

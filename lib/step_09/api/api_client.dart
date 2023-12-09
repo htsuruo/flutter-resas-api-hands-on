@@ -5,8 +5,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../../env.dart';
-import '../city/annual_municipality_tax.dart';
-import '../city/city.dart';
+import '../features/city/city.dart';
+import '../features/municipality_tax/annual_municipality_tax.dart';
 import 'api_exception.dart';
 
 abstract class ApiClient {

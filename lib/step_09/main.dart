@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'city/list_page.dart';
+import 'features/city/cities_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: [
         Locale('ja'),
       ],
-      home: CityListPage(),
+      home: CitiesPage(),
     );
   }
 }

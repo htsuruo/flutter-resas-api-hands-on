@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../api/api_client.dart';
-import '../widgets/widgets.dart';
+import '../../api/api_client.dart';
+import '../../widgets/widgets.dart';
+import '../city/city.dart';
 import 'annual_municipality_tax.dart';
-import 'city.dart';
 
-class CityDetailPage extends StatefulWidget {
-  const CityDetailPage({super.key, required this.city});
+class MunicipalityTaxesPage extends StatefulWidget {
+  const MunicipalityTaxesPage({super.key, required this.city});
 
   final City city;
 
   @override
-  State<CityDetailPage> createState() => _CityDetailPageState();
+  State<MunicipalityTaxesPage> createState() => _MunicipalityTaxesPageState();
 }
 
-class _CityDetailPageState extends State<CityDetailPage> {
+class _MunicipalityTaxesPageState extends State<MunicipalityTaxesPage> {
   late Future<List<AnnualMunicipalityTax>> _municipalityTaxesFuture;
 
   @override
