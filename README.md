@@ -1,8 +1,10 @@
 # Flutter RESAS API hands-on
 
-内閣府地方創生推進室が提供する、地域経済分析システムの [RESAS（リーサス）](https://resas.go.jp/#/13/13101) APIを利用したFlutterハンズオン用のレポジトリです。本レポジトリは、[【初学者向け】Flutter×RESAS APIで学ぶ、はじめてのスマホアプリ開発](https://zenn.dev/tsuruo/books/flutter-resas-app-hands-on) のソースコードであり、`step_01`から`step_09`まで各章と対応しています。
+本レポジトリは、内閣府の地方創生推進室が提供する、地域経済分析システム [RESAS（リーサス）](https://resas.go.jp/#/13/13101) APIを利用したFlutterハンズオン用レポジトリです。
 
-## スクリーンショット
+Zenn本の[【初学者向け】Flutter×RESAS APIで学ぶ、はじめてのスマホアプリ開発](https://zenn.dev/tsuruo/books/flutter-resas-app-hands-on) のソースコードであり、`step_01`から`step_09`まで各章と対応しています。
+
+## 完成版のスクリーンショット
 
 | 一覧画面 | 詳細画面 |
 | --- | --- |
