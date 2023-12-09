@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resas_api_hands_on/step_09/features/city/city_repository.dart';
 
-import '../../api/api_client.dart';
 import '../../widgets/widgets.dart';
 import '../municipality_tax/municipality_taxes_page.dart';
 import 'city.dart';
@@ -20,7 +20,7 @@ class _CitiesPageState extends State<CitiesPage> {
   @override
   void initState() {
     super.initState();
-    _citiesFuture = ApiClient.fetchCities();
+    _citiesFuture = CityRepository().fetchCities();
   }
 
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resas_api_hands_on/step_09/features/municipality_tax/municipality_repository.dart';
 import 'package:intl/intl.dart';
 
-import '../../api/api_client.dart';
 import '../../widgets/widgets.dart';
 import '../city/city.dart';
 import 'annual_municipality_tax.dart';
@@ -21,7 +21,7 @@ class _MunicipalityTaxesPageState extends State<MunicipalityTaxesPage> {
   @override
   void initState() {
     super.initState();
-    _municipalityTaxesFuture = ApiClient.fetchMunicipalityTaxes(
+    _municipalityTaxesFuture = MunicipalityRepository().fetchMunicipalityTaxes(
       city: widget.city,
     );
   }
