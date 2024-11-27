@@ -5,7 +5,7 @@ import 'package:flutter_resas_api_hands_on/env.dart';
 import 'package:http/http.dart' as http;
 
 import 'city.dart';
-import 'detail_page.dart';
+import 'city_detail_page.dart';
 
 class CityListPage extends StatefulWidget {
   const CityListPage({super.key});
